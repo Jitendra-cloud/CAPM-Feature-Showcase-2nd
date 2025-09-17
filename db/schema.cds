@@ -16,7 +16,7 @@ namespace sap.fe.featureShowcase;
 
 aspect rootBasis : {
     imageUrl                    : String;
-    stringProperty              : String;
+    stringProperty              : String default 'Root Entity (New)';
     integerValue                : Integer;
     forecastValue               : Integer;
     targetValue                 : Integer default 30;
@@ -36,12 +36,12 @@ aspect rootBasis : {
 
     fieldWithCriticality        : String;
 
-    deletePossible              : Boolean;
-    updateHidden                : Boolean;
+    deletePossible              : Boolean default true;
+    updateHidden                : Boolean default false;
     fieldWithURL                : String;
     fieldWithURLtext            : String;
 
-    email                       : String;
+    email                       : String default 'test@gmail.com';
     telephone                   : String;
 
     country                     : Country;
