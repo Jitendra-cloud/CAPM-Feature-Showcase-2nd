@@ -27,8 +27,8 @@
     },
     "crossNavigation": {
       "inbounds": {
-        "SampleSemantics-manage22": {
-          "semanticObject": "SampleSemantics2",
+        "SampleSemantics-manage": {
+          "semanticObject": "SampleSemantics",
           "action": "manage",
           "title": "{{SampleSemantics-manage.flpTitle}}",
           "subTitle": "{{SampleSemantics-manage.flpSubtitle}}",

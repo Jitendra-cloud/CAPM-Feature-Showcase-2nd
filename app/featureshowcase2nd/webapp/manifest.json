@@ -24,6 +24,20 @@
           "odataVersion": "4.0"
         }
       }
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "SampleSemantics-manage2": {
+          "semanticObject": "SampleSemantics2",
+          "action": "manage",
+          "title": "Title 2",
+          "subTitle": "Subtitle 2",
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          }
+        }
+      }
     }
   },
   "sap.ui": {
