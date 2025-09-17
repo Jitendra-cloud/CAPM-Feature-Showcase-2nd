@@ -5,75 +5,58 @@ using service1.ChildEntities2       as association2one  from './layouts_ChildEnt
 using service1.ChildEntities3       as childEntities3   from './layouts_ChildEntities3';
 using service1.Contacts             as contact          from './layouts_contacts';
 
-/**
-    UI.Identification (Actions on Object Page) & Semantic Key
- */
+
 annotate service.RootEntities with @(
-    //Search-Term: #SemanticKey
-    //field in bold, editing status displayed, when possible and it effects navigation
     Common.SemanticKey  : [stringProperty],                  
     UI.Identification   : [ { $Type : 'UI.DataFieldForAction', Action : 'service1.changeCriticality', Label : '{i18n>changeCriticality}', Criticality : criticality_code, CriticalityRepresentation : #WithIcon, },       //Has no effect
                             { $Type : 'UI.DataFieldForAction', Action : 'service1.changeCriticality', Label : '{i18n>changeCriticality}', Determining : true, Criticality : criticality_code, }, ], );
-/**
-    UI.LineItem
- */
+
 annotate service.RootEntities with @(
-    UI.LineItem : [ { $Type : 'UI.DataField', Value : imageUrl, ![@UI.Importance] : #High, },
-                    { $Type : 'UI.DataField', Value : stringProperty, ![@UI.Importance] : #High, },
-                    { $Type : 'UI.DataField', Value : fieldWithPrice, ![@UI.Importance] : #High, },
-                    { $Type : 'UI.DataFieldForAnnotation', Target : '@UI.DataPoint#fieldWithTooltip', Label : '{i18n>fieldWithToolTip}', },
-                    { $Type : 'UI.DataField', Value : fieldWithUoM, ![@UI.Importance] : #Low, },
-                    { $Type : 'UI.DataField', Value : fieldWithCriticality, Criticality : criticality_code, CriticalityRepresentation : #WithIcon, ![@UI.Importance] : #Low, },   //Supported values 0,1,2,3,5
-                    { $Type : 'UI.DataFieldForAnnotation', Label : '{i18n>progressIndicator}', Target : '@UI.DataPoint#progressIndicator', ![@UI.Importance] : #Low, }, //Added progress indicator to table
-                    { $Type : 'UI.DataFieldForAnnotation', Label : '{i18n>ratingIndicator}', Target : '@UI.DataPoint#ratingIndicator', ![@UI.Importance] : #Low, }, //Added rating indicator to table
-                    { $Type : 'UI.DataFieldForAnnotation', Label : '{i18n>bulletChart}', Target : '@UI.Chart#bulletChart', ![@UI.Importance] : #High, },
-                    { $Type : 'UI.DataField', Value : association2one_ID, Label : '{i18n>ChildEntity2}', ![@UI.Importance] : #High, },
-                    { $Type : 'UI.DataFieldForAnnotation', Target : '@UI.FieldGroup#AdminData', Label : '{i18n>adminData}', ![@UI.Importance] : #High, },
-                    { $Type : 'UI.DataFieldForAnnotation', Target : '@UI.Chart#radialChart', Label : '{i18n>radialChart}', },
-                    { $Type : 'UI.DataFieldForAnnotation', Target : 'contact/@Communication.Contact', Label : '{i18n>contactQuickView}' },
-                    { $Type : 'UI.DataFieldForAction', Action : 'service1.changeCriticality', Label : '{i18n>changeCriticality}', }, //Reference to the action of the CAP service
-                    { $Type : 'UI.DataFieldForAction', Action : 'service1.changeProgress', Label : '{i18n>changeProgess}', IconUrl : 'sap-icon://command-line-interfaces', Inline : true, },
+    UI.LineItem : [ { $Type : 'UI.DataField',               Value : imageUrl, ![@UI.Importance] : #High, },
+                    { $Type : 'UI.DataField',               Value : stringProperty, ![@UI.Importance] : #High, },
+                    { $Type : 'UI.DataField',               Value : fieldWithPrice, ![@UI.Importance] : #High, },
+                    { $Type : 'UI.DataField',               Value : fieldWithUoM, ![@UI.Importance] : #Low, },
+                    { $Type : 'UI.DataField',               Value : fieldWithCriticality, Criticality : criticality_code, CriticalityRepresentation : #WithIcon, ![@UI.Importance] : #Low, },   //Supported values 0,1,2,3,5
+                    { $Type : 'UI.DataField',               Value : association2one_ID, Label : '{i18n>ChildEntity2}', ![@UI.Importance] : #High, },
+
+                    { $Type : 'UI.DataFieldForAnnotation',  Target : '@UI.DataPoint#fieldWithTooltip', Label : '{i18n>fieldWithToolTip}', },
+                    { $Type : 'UI.DataFieldForAnnotation',  Target : '@UI.FieldGroup#AdminData', Label : '{i18n>adminData}', ![@UI.Importance] : #High, },
+                    { $Type : 'UI.DataFieldForAnnotation',  Target : '@UI.Chart#radialChart', Label : '{i18n>radialChart}', },
+                    { $Type : 'UI.DataFieldForAnnotation',  Target : 'contact/@Communication.Contact', Label : '{i18n>contactQuickView}' },
+                    
+                    { $Type : 'UI.DataFieldForAnnotation',  Label : '{i18n>progressIndicator}', Target : '@UI.DataPoint#progressIndicator', ![@UI.Importance] : #Low, }, //Added progress indicator to table
+                    { $Type : 'UI.DataFieldForAnnotation',  Label : '{i18n>ratingIndicator}', Target : '@UI.DataPoint#ratingIndicator', ![@UI.Importance] : #Low, }, //Added rating indicator to table
+                    { $Type : 'UI.DataFieldForAnnotation',  Label : '{i18n>bulletChart}', Target : '@UI.Chart#bulletChart', ![@UI.Importance] : #High, },
+                    
+                    { $Type : 'UI.DataFieldForAction',      Action : 'service1.changeCriticality', Label : '{i18n>changeCriticality}', }, //Reference to the action of the CAP service
+                    { $Type : 'UI.DataFieldForAction',      Action : 'service1.changeProgress', Label : '{i18n>changeProgess}', IconUrl : 'sap-icon://command-line-interfaces', Inline : true, },
+                    { $Type : 'UI.DataFieldForAction',      Action : 'service1.EntityContainer/unboundAction', Label : '{i18n>unboundAction}', }, //Unbound actions need to be referenced through the entity container (Action import)   
+                    { $Type : 'UI.DataFieldForAction',      Action : 'service1.EntityContainer/criticalAction', Label : '{i18n>criticalAction}', }, //Unbound actions need to be referenced through the entity container (Action import)
+                    { $Type : 'UI.DataFieldForAction',      Action : 'service1.resetEntities(service1.RootEntities)', Label : '{i18n>resetEntities}', }, //Static action
+
                     { $Type : 'UI.DataFieldForIntentBasedNavigation', Label : '{i18n>inboundNavigation}', SemanticObject : 'FeatureShowcaseChildEntity2', Action : 'manage', RequiresContext : true, Inline : true, IconUrl : 'sap-icon://cart',
-                      Mapping : [ { $Type : 'Common.SemanticObjectMappingType',
-                                    LocalProperty : integerValue,
-                                    SemanticObjectProperty : 'integerProperty', },
-                                ],
-                      ![@UI.Importance] : #High,
-                    },
-                    { $Type : 'UI.DataFieldForAction', Action : 'service1.EntityContainer/unboundAction', Label : '{i18n>unboundAction}', }, //Unbound actions need to be referenced through the entity container (Action import)   
-                    { $Type : 'UI.DataFieldForAction', Action : 'service1.EntityContainer/criticalAction', Label : '{i18n>criticalAction}', }, //Unbound actions need to be referenced through the entity container (Action import)
-                    { $Type : 'UI.DataFieldForAction', Action : 'service1.resetEntities(service1.RootEntities)', Label : '{i18n>resetEntities}', }, //Static action
-                    { $Type : 'UI.DataFieldWithUrl', Url : fieldWithURL, //Target, when pressing the text
-                       Value : fieldWithURLtext, Label : '{i18n>dataFieldWithURL}', ![@UI.Importance] : #Medium, }, //Visible text              
-    ],
+                      Mapping : [ { $Type : 'Common.SemanticObjectMappingType', LocalProperty : integerValue, SemanticObjectProperty : 'integerProperty', }, ],
+                                    ![@UI.Importance] : #High, },
+
+                    { $Type : 'UI.DataFieldWithUrl', Url : fieldWithURL, Value : fieldWithURLtext, Label : '{i18n>dataFieldWithURL}', ![@UI.Importance] : #Medium, }, ],
 
     UI.LineItem.@UI.Criticality : criticality_code, // Annotation, so that the row has a criticality
 
     UI.LineItem #simplified : [ { $Type : 'UI.DataField', Value : stringProperty, ![@UI.Importance] : #High, },
                                 { $Type : 'UI.DataField', Value : fieldWithPrice, ![@UI.Importance] : #High, },
                                 { $Type : 'UI.DataField', Value : fieldWithUoM, ![@UI.Importance] : #High, },
-                                { $Type : 'UI.DataField', Value : fieldWithCriticality, Criticality : criticality_code, ![@UI.Importance] : #High, },
-    ],
-);
+                                { $Type : 'UI.DataField', Value : fieldWithCriticality, Criticality : criticality_code, ![@UI.Importance] : #High, }, ], );
 
-/**
-    UI.FieldGroup
- */
 annotate service.RootEntities with @(
-    UI.FieldGroup #AdminData : { 
-        Data : [ {Value : createdAt},
-                 {Value : createdBy},
-                 {Value : modifiedAt},
-                 {Value : modifiedBy}, ] },
+    UI.FieldGroup #AdminData : { Data : [ {Value : createdAt}, {Value : createdBy}, {Value : modifiedAt}, {Value : modifiedBy}, ] },
 
-    UI.FieldGroup #Section : {
-        Data : [ { $Type : 'UI.DataFieldForAnnotation', Target : '@UI.ConnectedFields#ConnectedDates', },
-                 { Value   : description},
-                 { Value   : description_customGrowing},
-                 { $Type : 'UI.DataFieldForIntentBasedNavigation', Label : '{i18n>inboundNavigation}', SemanticObject : 'FeatureShowcaseChildEntity2', Action : 'manage', RequiresContext : true, IconUrl : 'sap-icon://cart', Mapping : [ {$Type : 'Common.SemanticObjectMappingType', LocalProperty : integerValue, SemanticObjectProperty : 'integerProperty', }, ], ![@UI.Importance] : #High, },
-                 { $Type : 'UI.DataFieldForAction', Action : 'service1.EntityContainer/unboundAction', Label : '{i18n>formActionEmphasized}', ![@UI.Emphasized] : true, }, //Button is highlighted
-                 { $Type : 'UI.DataFieldForAction', Action : 'service1.changeProgress', Label : '{i18n>formAction}', Inline  : true, }, //Action in the Form toolbar instead of the section toolbar
-                 { $Type : 'UI.DataField', Label : '{i18n>MultiInputField}', Value : childEntities1.field, } ] },
+    UI.FieldGroup #Section : { Data : [ { $Type : 'UI.DataFieldForAnnotation', Target : '@UI.ConnectedFields#ConnectedDates', },
+                                        { Value   : description},
+                                        { Value   : description_customGrowing},
+                                        { $Type : 'UI.DataFieldForIntentBasedNavigation', Label : '{i18n>inboundNavigation}', SemanticObject : 'FeatureShowcaseChildEntity2', Action : 'manage', RequiresContext : true, IconUrl : 'sap-icon://cart', Mapping : [ {$Type : 'Common.SemanticObjectMappingType', LocalProperty : integerValue, SemanticObjectProperty : 'integerProperty', }, ], ![@UI.Importance] : #High, },
+                                        { $Type : 'UI.DataFieldForAction', Action : 'service1.EntityContainer/unboundAction', Label : '{i18n>formActionEmphasized}', ![@UI.Emphasized] : true, }, //Button is highlighted
+                                        { $Type : 'UI.DataFieldForAction', Action : 'service1.changeProgress', Label : '{i18n>formAction}', Inline  : true, }, //Action in the Form toolbar instead of the section toolbar
+                                        { $Type : 'UI.DataField', Label : '{i18n>MultiInputField}', Value : childEntities1.field, } ] },
 
     UI.FieldGroup #ShowWhenInEdit : {
         Data : [ {Value : stringProperty},
