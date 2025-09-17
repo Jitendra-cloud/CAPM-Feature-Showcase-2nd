@@ -20,12 +20,14 @@
   },
   "scripts": {
     "start": "cds-serve",
-    "watch-featureshowcase": "cds watch --open featureshowcase/index.html?sap-ui-xx-viewCache=false --livereload false"
+    "watch-featureshowcase": "cds watch --open featureshowcase/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "watch-featureshowcase2nd": "cds watch --open featureshowcase2nd/index.html?sap-ui-xx-viewCache=false --livereload false"
   },
   "workspaces": [
     "app/*"
   ],
   "sapux": [
-    "app/featureshowcase"
+    "app/featureshowcase",
+    "app/featureshowcase2nd"
   ]
 }
